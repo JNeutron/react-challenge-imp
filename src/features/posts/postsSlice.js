@@ -54,6 +54,9 @@ export const postsSlice = createSlice({
          */
         markAsRead: (state, action) => {
             state.visitedPosts[action.payload] = 1
+        },
+        dismissPost: (state, action) => {
+            state.postsList.splice(action.payload, 1)
         }
     },
     extraReducers: (builder) => {
@@ -71,6 +74,6 @@ export const postsSlice = createSlice({
     }
 })
 
-export const { markAsRead } = postsSlice.actions
+export const { markAsRead, dismissPost } = postsSlice.actions
 
 export default postsSlice.reducer

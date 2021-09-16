@@ -14,7 +14,7 @@ import CardMedia from "@mui/material/CardMedia";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PostsPagination from "./Pagination";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchAsyncPosts, markAsRead} from "./postsSlice";
+import {fetchAsyncPosts, markAsRead, dismissPost} from "./postsSlice";
 import Skeleton from "@mui/material/Skeleton";
 import {FormatTime} from "../../helpers/datetime";
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -34,7 +34,7 @@ const Posts = () => {
 
     return (
         <Container xs={{ py: 8}} maxWidth="md">
-            <Grid container spacing={4}>
+            { loading || postsList.length > 0 ? (<Grid container spacing={4}>
                 {(loading ? Array.from(new Array(4)) : postsList).map((post, index) => (
                     <Grid item key={index} xs={12} sm={6} md={6}>
                         <CardActionArea component="div" onClick={() => dispatch(markAsRead(post.id))}>
@@ -67,7 +67,7 @@ const Posts = () => {
                                     )}
                                     { loading ? null : (
                                         <div>
-                                            <IconButton>
+                                            <IconButton onClick={() => dispatch(dismissPost(index))}>
                                                 <DeleteIcon sx={{ fontSize: 24 }} />
                                             </IconButton>
                                         </div>
@@ -113,7 +113,11 @@ const Posts = () => {
                         </CardActionArea>
                     </Grid>
                 ))}
-            </Grid>
+            </Grid> ) : (
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <img src="https://cdn.dribbble.com/users/888330/screenshots/2653750/media/b7459526aeb0786638a2cf16951955b1.png"/>
+                </Box>
+            ) }
             <Divider sx={{ mt: 4 }}/>
             <PostsPagination pagination={pagination}/>
         </Container>
