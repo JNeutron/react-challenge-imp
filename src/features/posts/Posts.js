@@ -21,10 +21,12 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import CardActionArea from "@mui/material/CardActionArea";
 import Button from "@mui/material/Button";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 const Posts = () => {
 
-    const { loading, postsList, visitedPosts, pagination } = useSelector((state) => state.posts)
+    const { loading, postsList, visitedPosts, pagination, hasError } = useSelector((state) => state.posts)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -35,6 +37,12 @@ const Posts = () => {
 
     return (
         <Container xs={{ py: 8}} maxWidth="md">
+            { hasError ? (
+                <Alert sx={{ mb: 4 }} severity="error">
+                    <AlertTitle>Error</AlertTitle>
+                    Something went wrong. Please refresh this page.
+                </Alert>
+            ) : null }
             { loading || postsList.length > 0 ? (<Grid container spacing={4}>
                 {(loading ? Array.from(new Array(4)) : postsList).map((post, index) => (
                     <Grid item key={index} xs={12} sm={6} md={6}>

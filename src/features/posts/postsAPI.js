@@ -10,7 +10,10 @@ import type { PostParams } from "../../config/types";
 export function fetchPosts ( params: PostParams ) {
     return new Promise((resolve, reject) => {
         axios.get(`https://www.reddit.com/r/all/top/.json?t=all&limit=${params.limit}&after=${params.after}`)
-            .then(response => resolve(response.data.data))
+            .then(response => {
+                console.log(response)
+                resolve(response.data.data)
+            })
             .catch(reject)
     })
 }

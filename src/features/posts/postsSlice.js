@@ -9,7 +9,8 @@ const initialState : {
     loading: boolean,
     postsList: Array<Post>,
     visitedPosts: Object,
-    pagination: Pagination
+    pagination: Pagination,
+    hasError: boolean
 } = {
     loading: false,
     postsList: [],
@@ -18,7 +19,8 @@ const initialState : {
         pages: [null],
         limit: 4,
         current: 1
-    }
+    },
+    hasError: false
 }
 
 export const fetchAsyncPosts = createAsyncThunk(
@@ -37,7 +39,7 @@ export const fetchAsyncPosts = createAsyncThunk(
                 current: params.page
             }
         } catch (err) {
-            console.error(err)
+            console.log(err)
             rejectWithValue(err.response.data)
         }
     }
@@ -83,6 +85,9 @@ export const postsSlice = createSlice({
                 state.pagination.pages[action.payload.current] = action.payload.after
                 state.pagination.current = action.payload.current
                 state.loading = false
+            })
+            .addCase(fetchAsyncPosts.rejected, (state, action) => {
+                state.hasError = true
             })
     }
 })
