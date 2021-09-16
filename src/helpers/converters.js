@@ -9,7 +9,6 @@ export const postConverter = (postRawData): Post => {
         author: postRawData.data.author,
         thumbnail: postRawData.data.thumbnail === 'image' || postRawData.data.thumbnail === 'default' ? 'https://thumbs.odir.org/cdn/reddit.com/200.jpeg' : postRawData.data.thumbnail,
         timestamp: EpochToDate(postRawData.data.created_utc),
-        visited: false,
         num_comments: postRawData.data.num_comments
     }
 }

@@ -8,13 +8,15 @@ import {postConverter} from "../../helpers/converters";
 const initialState : {
     loading: boolean,
     postsList: Array<Post>,
+    visitedPosts: Object,
     pagination: Pagination
 } = {
     loading: false,
     postsList: [],
+    visitedPosts: {},
     pagination: {
         pages: [null],
-        limit: 3,
+        limit: 4,
         current: 1
     }
 }
@@ -45,7 +47,14 @@ export const postsSlice = createSlice({
     name: 'posts',
     initialState,
     reducers: {
-        // Logic
+        /**
+         * Mark a entry as read and keep in state
+         * @param state
+         * @param action
+         */
+        markAsRead: (state, action) => {
+            state.visitedPosts[action.payload] = 1
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -54,12 +63,14 @@ export const postsSlice = createSlice({
                 state.postsList = []
             })
             .addCase(fetchAsyncPosts.fulfilled, (state, action) => {
-                state.loading = false
                 state.postsList = action.payload.postsList
                 state.pagination.pages[action.payload.current] = action.payload.after
                 state.pagination.current = action.payload.current
+                state.loading = false
             })
     }
 })
+
+export const { markAsRead } = postsSlice.actions
 
 export default postsSlice.reducer

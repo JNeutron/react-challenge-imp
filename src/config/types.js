@@ -16,7 +16,7 @@ export type Post = {
     title: string,
     author: string,
     thumbnail: string,
-    timestamp: Date,
+    timestamp: string,
     num_comments: number,
     visited: boolean
 }
