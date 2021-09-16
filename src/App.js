@@ -1,10 +1,17 @@
 import React from 'react';
-import {Button} from "@mui/material";
+import "./App.css"
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import Posts from "./features/posts/Posts";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <div>
-      <Button variant="contained">Hello World</Button>
+      <Header/>
+      <Hero />
+      <Posts />
+      <Footer />
     </div>
   );
 }
