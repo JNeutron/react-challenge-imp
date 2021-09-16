@@ -15,7 +15,7 @@ import CardMedia from "@mui/material/CardMedia";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PostsPagination from "./Pagination";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchAsyncPosts, selectPosts} from "./postsSlice";
+import {fetchAsyncPosts} from "./postsSlice";
 import Skeleton from "@mui/material/Skeleton";
 import {FormatTime} from "../../helpers/datetime";
 
@@ -29,8 +29,6 @@ const Posts = () => {
             page: pagination.current
         }))
     }, [dispatch])
-    console.log(loading)
-    console.log(pagination)
 
     return (
         <Container xs={{ py: 8}} maxWidth="md">
@@ -106,7 +104,8 @@ const Posts = () => {
                     </Grid>
                 ))}
             </Grid>
-            <PostsPagination />
+            <Divider sx={{ mt: 4 }}/>
+            <PostsPagination pagination={pagination}/>
         </Container>
     )
 }

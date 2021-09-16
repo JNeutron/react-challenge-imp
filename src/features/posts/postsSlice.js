@@ -62,7 +62,4 @@ export const postsSlice = createSlice({
     }
 })
 
-//
-export const selectPosts = (state) => state.posts.postsList
-
 export default postsSlice.reducer
