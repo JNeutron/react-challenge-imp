@@ -17,7 +17,7 @@ const initialState : {
     visitedPosts: {},
     pagination: {
         pages: [null],
-        limit: 4,
+        limit: 10,
         current: 1
     },
     hasError: false

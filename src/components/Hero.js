@@ -22,7 +22,7 @@ const Hero = () => (
                 <img src={logo} className="App-logo" alt="logo" height={60} /> Reddit
             </Typography>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                A Reddit client that shows the top 50 entries from Reddit.
+                A React App that shows the top entries from Reddit.
             </Typography>
         </Container>
     </Box>
