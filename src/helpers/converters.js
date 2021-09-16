@@ -1,6 +1,6 @@
 // @flow
 import type {Post} from "../config/types";
-import {EpochToDate} from "../config/helpers/datetime";
+import {EpochToDate} from "./datetime";
 
 export const postConverter = (postRawData): Post => {
     return {

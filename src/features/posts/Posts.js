@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Container} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -14,42 +14,83 @@ import red from "@mui/material/colors/red";
 import CardMedia from "@mui/material/CardMedia";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PostsPagination from "./Pagination";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchAsyncPosts, selectPosts} from "./postsSlice";
+import Skeleton from "@mui/material/Skeleton";
+import {FormatTime} from "../../helpers/datetime";
 
-const posts = [1,2,3,4,5,6]
+const Posts = () => {
 
-const Posts = props => {
+    const { loading, postsList, pagination } = useSelector((state) => state.posts)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchAsyncPosts({
+            page: pagination.current
+        }))
+    }, [dispatch])
+    console.log(loading)
+    console.log(pagination)
 
     return (
         <Container xs={{ py: 8}} maxWidth="md">
             <Grid container spacing={4}>
-                {posts.map((post) => (
-                    <Grid item key={post} xs={12} sm={6} md={6}>
+                {(loading ? Array.from(new Array(4)) : postsList).map((post, index) => (
+                    <Grid item key={index} xs={12} sm={6} md={6}>
                         <Card className="post-card">
                             <Box sx={{ p: 2, display: 'flex', alignItems: 'center' }}>
-                                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                                    M
-                                </Avatar>
-                                <Stack spacing={0.5} className="post-author">
-                                    <Typography fontWeight={700}>Michael Scott</Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                         Scranton, PA
-                                    </Typography>
-                                </Stack>
-                                <div>
-                                    <IconButton>
-                                        <DeleteIcon sx={{ fontSize: 24 }} />
-                                    </IconButton>
-                                </div>
+                                { loading ? (
+                                    <Skeleton animation="wave" variant="circular" width={40} height={40} />
+                                ) : (
+                                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                                        { post.author.charAt(0) }
+                                    </Avatar>
+                                )}
+                                { loading ? (
+                                    <Stack spacing={0.5} className="post-author">
+                                        <Skeleton
+                                            animation="wave"
+                                            height={10}
+                                            width="80%"
+                                            style={{ marginBottom: 6 }}
+                                        />
+                                        <Skeleton animation="wave" height={10} width="40%" />
+                                    </Stack>
+                                ) : (
+                                    <Stack spacing={0.5} className="post-author">
+                                        <Typography fontWeight={700}>{ `u/${post.author}` }</Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {FormatTime(post.timestamp)}
+                                        </Typography>
+                                    </Stack>
+                                )}
+                                { loading ? null : (
+                                    <div>
+                                        <IconButton>
+                                            <DeleteIcon sx={{ fontSize: 24 }} />
+                                        </IconButton>
+                                    </div>
+                                )}
                             </Box>
+                            {loading ? (
+                                <Skeleton sx={{ height: 190 }} animation="wave" variant="rectangular" />
+                            ) : (
                             <CardMedia
                                 component="img"
-                                image="https://source.unsplash.com/random"
-                                alt="random"
-                            />
-                            <Box sx={{ p: 2, display: 'flex' }}>
-                                <Typography gutterBottom variant="h6" component="h3">
-                                    Post title
-                                </Typography>
+                                image={post.thumbnail}
+                                alt={post.id}
+                            />)}
+                            <Box sx={{ p: 2 }}>
+                                { loading ? (
+                                    <React.Fragment>
+                                        <Skeleton animation="wave" height={10} style={{ marginBottom: 6 }} />
+                                        <Skeleton animation="wave" height={10} width="80%" />
+                                    </React.Fragment>
+                                ) : (
+                                    <Typography gutterBottom variant="h6" component="h3">
+                                        { post.title }
+                                    </Typography>
+                                )}
                             </Box>
                             <Divider />
                             <Stack
@@ -58,7 +99,7 @@ const Posts = props => {
                                 justifyContent="space-between"
                                 sx={{ px: 2, py: 1, bgcolor: 'background.default' }}
                             >
-                                <Chip label="20 Comments" />
+                                <Chip label={`${post ? post.num_comments : 0} Comments`} />
                                 <Switch />
                             </Stack>
                         </Card>
