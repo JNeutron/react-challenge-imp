@@ -30,7 +30,7 @@ const Pagination = (props: Props) => {
     }
 
     return (
-        <Box sx={{ p: 2, mt: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Box sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Typography>
                 Page { pagination.current } of ∞
             </Typography>

@@ -14,12 +14,13 @@ import CardMedia from "@mui/material/CardMedia";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PostsPagination from "./Pagination";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchAsyncPosts, markAsRead, dismissPost} from "./postsSlice";
+import {fetchAsyncPosts, markAsRead, dismissPost, dismissAllPosts} from "./postsSlice";
 import Skeleton from "@mui/material/Skeleton";
 import {FormatTime} from "../../helpers/datetime";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import CardActionArea from "@mui/material/CardActionArea";
+import Button from "@mui/material/Button";
 
 const Posts = () => {
 
@@ -66,11 +67,11 @@ const Posts = () => {
                                         </Stack>
                                     )}
                                     { loading ? null : (
-                                        <div>
+                                        <React.Fragment>
                                             <IconButton onClick={() => dispatch(dismissPost(index))}>
                                                 <DeleteIcon sx={{ fontSize: 24 }} />
                                             </IconButton>
-                                        </div>
+                                        </React.Fragment>
                                     )}
                                 </Box>
                                 {loading ? (
@@ -119,7 +120,18 @@ const Posts = () => {
                 </Box>
             ) }
             <Divider sx={{ mt: 4 }}/>
+            { postsList.length > 0 ? (
+                <React.Fragment>
+                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <Button variant="text" color="error" onClick={() => dispatch(dismissAllPosts())}>
+                            Dismiss all
+                        </Button>
+                    </Box>
+                    <Divider/>
+                </React.Fragment>
+            ) : null }
             <PostsPagination pagination={pagination}/>
+
         </Container>
     )
 }
