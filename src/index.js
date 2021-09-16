@@ -6,11 +6,17 @@ import { store } from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 
+import theme from "./config/theme";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
