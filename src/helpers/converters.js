@@ -2,7 +2,7 @@
 import type {Post} from "../config/types";
 import {EpochToDate} from "./datetime";
 
-export const postConverter = (postRawData): Post => {
+export const postConverter = (postRawData: Object): Post => {
     return {
         id: postRawData.data.id,
         title: postRawData.data.title,

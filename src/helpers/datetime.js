@@ -1,5 +1,6 @@
 // @flow
 import React from "react";
+import type { Element } from "react";
 import Moment from 'react-moment';
 
 const EpochToDate = (epoch: number) : Date => {
@@ -10,7 +11,7 @@ const EpochToDate = (epoch: number) : Date => {
     return new Date(epoch);
 }
 
-const FormatTime = (datetime: Date) => {
+const FormatTime = (datetime: Date) : Element<any> => {
     return (<><Moment date={datetime} unit="day" format="HH" durationFromNow/> hours ago</>);
 }
 

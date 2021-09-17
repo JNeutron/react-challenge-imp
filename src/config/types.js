@@ -5,10 +5,15 @@ export type PostParams = {
     page: number
 }
 
-export type Pagination = {
-    pages: Array,
+export type ApiPostParams = {
     limit: number,
-    current: string
+    after: string
+}
+
+export type Pagination = {
+    pages: Array<string>,
+    limit: number,
+    current: number
 }
 
 export type Post = {
@@ -16,7 +21,6 @@ export type Post = {
     title: string,
     author: string,
     thumbnail: string,
-    timestamp: string,
-    num_comments: number,
-    visited: boolean
+    timestamp: Date,
+    num_comments: number
 }

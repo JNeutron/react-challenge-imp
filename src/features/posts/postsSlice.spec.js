@@ -29,7 +29,7 @@ describe('posts reducer', () => {
             "a1yofz": 1
         },
         pagination: {
-            pages: [null, "j3oj21"],
+            pages: ["", "j3oj21"],
             limit: 10,
             current: 2
         },
@@ -42,7 +42,7 @@ describe('posts reducer', () => {
             postsList: [],
             visitedPosts: {},
             pagination: {
-                pages: [null],
+                pages: [""],
                 limit: 10,
                 current: 1
             },

@@ -16,7 +16,7 @@ const initialState : {
     postsList: [],
     visitedPosts: {},
     pagination: {
-        pages: [null],
+        pages: [""],
         limit: 10,
         current: 1
     },
@@ -25,7 +25,7 @@ const initialState : {
 
 export const fetchAsyncPosts = createAsyncThunk(
     'posts/fetchPosts',
-    async (params : PostParams, { getState, rejectWithValue }) : { postList: Array, after: string, current: number } => {
+    async (params : PostParams, { getState, rejectWithValue }) : Object => {
         const state = getState()
 
         try {
