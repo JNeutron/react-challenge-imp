@@ -18,11 +18,12 @@ const Posts = () => {
     const { loading, postsList, visitedPosts, pagination, hasError } = useSelector((state) => state.posts)
     const dispatch = useDispatch()
 
+    /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
         dispatch(fetchAsyncPosts({
             page: pagination.current
         }))
-    }, [dispatch, pagination])
+    }, [dispatch])
 
     return (
         <Container xs={{ py: 8}} maxWidth="md">
